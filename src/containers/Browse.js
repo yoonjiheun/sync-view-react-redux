@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
+import { setRecentVideos, setUpcomingVideos, selectVideo, loadRecentVideos, loadUpcomingVideos, closeModal } from '../actions/BrowseAction';
 
-import { setRecentVideos, setUpcomingVideos } from '../actions/BrowseAction';
 import TheMovieDB from '../helpers/TheMovieDB';
+import VideoRoomModal from '../components/VideoRoomModal';
+import BrowseVideoBox from '../components/BrowseVideoBox';
 
 class Browse extends Component {
   constructor(props) {
     super();
-    TheMovieDB.getRecentMovies().then((recentMovies) => {
-      this.props.setRecentVideos(recentMovies);
-    });
+    props.loadRecentVideos();
+    props.loadUpcomingVideos();
+  }
 
-    TheMovieDB.getUpcomingMovies().then((upcomingMovies) => {
-      this.props.setUpcomingVideos(upcomingMovies);
-    });
+  renderRecentMovies() {
+    if(this.props.browse.recentMovies.length > 0) {
+       return this.props.browse.recentMovies.map(obj => {
+         return <BrowseVideoBox selectVideo={this.props.selectVideo} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} />
+       });
+    }
+  }
+
+  renderUpcomingMovies(){
+    if(this.props.browse.upcomingMovies.length > 0) {
+      return this.props.browse.upcomingMovies.map(obj => {
+         return <BrowseVideoBox selectVideo={this.props.selectVideo} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} />
+      });
+    }
   }
 
   render() {
     return (
-      <div></div>
+      <div className="container">
+        <div className="columns is-multiline">
+          {this.renderRecentMovies()}
+        </div>
+        <div className="columns is-multiline">
+          {this.renderUpcomingMovies()}
+        </div>
+        <VideoRoomModal modalActivated={ this.props.browse.modalActivated } closeModal={this.props.closeModal}/>
+     </div>
     );
   }
 }
@@ -31,7 +53,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setRecentVideos, setUpcomingVideos }, dispatch);
+  return bindActionCreators({ setRecentVideos, setUpcomingVideos, selectVideo, loadRecentVideos,loadUpcomingVideos, closeModal }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Browse);

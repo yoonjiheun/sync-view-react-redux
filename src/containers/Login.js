@@ -9,6 +9,7 @@ import ToastEnum from '../enums/ToastEnum';
 import Validator from '../helpers/Validators';
 import UserService from '../helpers/UserService';
 import { emailChange, passwordChange, emailValidationChange, loginRequest, loginSuccess, loginFailure } from '../actions/LoginAction';
+import { withRouter } from 'react-router-dom';
 
 import wg1 from '../assets/images/wg1.png';
 
@@ -35,7 +36,7 @@ class Login extends Component {
     UserService.login(this.props.login.email, this.props.login.password).then((resp) =>{
       if(resp.statusCode === 200) {
         this.props.loginSuccess();
-        this.notify(resp.message, ToastEnum.SUCCESS);
+        this.props.history.push('/browse');
       }
       else {
         this.props.loginFailure();
@@ -127,4 +128,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ emailChange, passwordChange, emailValidationChange, loginRequest, loginSuccess, loginFailure }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

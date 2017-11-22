@@ -15,7 +15,17 @@ html, body {
 }
 
 .wrap {
-  height: inherit;
+  height: 80%;
+}
+
+.content-wrap {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.content-wrap h1 {
+  min-height: 40px;
 }
 
 .login.container {
@@ -33,4 +43,45 @@ html, body {
   width: 50%;
   height: 50%;
   padding-bottom: 10px;
+}
+
+.video-box {
+  cursor: pointer;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.navbar-brand:hover {
+  cursor: pointer;
+  color: rgb(64, 224, 208);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.modal-wrap {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+
+.room-choice:hover {
+  cursor: pointer;
+  zoom: 1.1;
+}
+
+.room-choice {
+  margin: 20px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  width: 500px;
 }

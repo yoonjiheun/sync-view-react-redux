@@ -9,18 +9,29 @@ import {
 import './index.css';
 
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer from './reducers/index.js';
+import { Provider } from 'react-redux'
+import { loadRecentVideos, loadUpcomingVideos } from './actions/BrowseAction';
+import RootReducer from './reducers/RootReducer.js';
 
+import Navbar from './components/Navbar';
 import Login from './containers/Login';
 import Browse from './containers/Browse';
 
-let store = createStore(rootReducer);
+import configureStore from './store/configureStore';
+
+
+
+
+let store = configureStore();
+
+// store.dispatch(loadRecentVideos());
+// store.dispatch(loadUpcomingVideos());
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <div className="wrap">
+        <Navbar/>
         <Route exact path="/" component={ Login }/>
         <Route path="/browse" component={ Browse }/>
       </div>
