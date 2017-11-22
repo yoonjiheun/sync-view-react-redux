@@ -10,14 +10,15 @@ import './index.css';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
-import { loadRecentVideos, loadUpcomingVideos } from './actions/BrowseAction';
+import { loadRecentVideos, loadUpcomingVideos } from './actions/VideoListAction';
 import RootReducer from './reducers/RootReducer.js';
 
 import Navbar from './components/Navbar';
 import Login from './containers/Login';
 import Browse from './containers/Browse';
+import VideoRoom from './containers/VideoRoom';
 
-import configureStore from './store/configureStore';
+import configureStore from './stores/configureStore';
 
 
 
@@ -34,6 +35,7 @@ ReactDOM.render(
         <Navbar/>
         <Route exact path="/" component={ Login }/>
         <Route path="/browse" component={ Browse }/>
+        <Route path="/video"  component={ VideoRoom }/>
       </div>
     </Router>
   </Provider>

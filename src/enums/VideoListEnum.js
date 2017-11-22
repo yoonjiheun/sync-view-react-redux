@@ -1,0 +1,7 @@
+var VideoListEnum = {
+  SET_RECENT_VIDEOS: 'SET_RECENT_VIDEOS',
+  SET_UPCOMING_VIDEOS: 'SET_UPCOMING_VIDEOS',
+  SELECT_VIDEO: 'SELECT_VIDEO'
+}
+
+export default VideoListEnum;

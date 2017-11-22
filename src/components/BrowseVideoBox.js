@@ -7,8 +7,8 @@ class BrowseVideoBox extends Component {
   }
 
   handleSelection(){
-    this.setState({selected: true});
-    this.props.selectVideo(this.props.id);
+    this.props.selectVideo(this.props.vidObj);
+    this.props.openModal();
   }
 
   render() {

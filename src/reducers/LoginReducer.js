@@ -1,6 +1,7 @@
 import LoginEnum from '../enums/LoginEnum';
+import initialLoginStore from '../stores/LoginStore';
 
-export function loginReducer (state, action) {
+export function loginReducer (state = initialLoginStore, action) {
   switch(action.type) {
     case LoginEnum.LOGIN_SUCCESS:
     return {
@@ -52,11 +53,6 @@ export function loginReducer (state, action) {
       }
     }
     default:
-    return {
-      "email": '',
-      "password": '',
-      "emailValidation": LoginEnum.NOT_SET,
-      "loginStatus": LoginEnum.LOGIN_FAILURE
-    }
+    return state;
   }
 }

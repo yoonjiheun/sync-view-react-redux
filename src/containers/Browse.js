@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { setRecentVideos, setUpcomingVideos, selectVideo, loadRecentVideos, loadUpcomingVideos, closeModal } from '../actions/BrowseAction';
+
+
+import { selectVideo } from '../actions/VideoAction';
+import { setRecentVideos, setUpcomingVideos, loadRecentVideos, loadUpcomingVideos } from '../actions/VideoListAction';
+import { openModal, closeModal } from '../actions/ModalAction';
 
 import TheMovieDB from '../helpers/TheMovieDB';
 import VideoRoomModal from '../components/VideoRoomModal';
@@ -11,22 +15,23 @@ import BrowseVideoBox from '../components/BrowseVideoBox';
 class Browse extends Component {
   constructor(props) {
     super();
+    console.log(props);
     props.loadRecentVideos();
     props.loadUpcomingVideos();
   }
 
   renderRecentMovies() {
-    if(this.props.browse.recentMovies.length > 0) {
-       return this.props.browse.recentMovies.map(obj => {
-         return <BrowseVideoBox selectVideo={this.props.selectVideo} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} />
+    if(this.props.videoList.recentMovies.length > 0) {
+       return this.props.videoList.recentMovies.map(obj => {
+         return <BrowseVideoBox selectVideo={this.props.selectVideo} openModal={this.props.openModal} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} vidObj={obj}  />
        });
     }
   }
 
   renderUpcomingMovies(){
-    if(this.props.browse.upcomingMovies.length > 0) {
-      return this.props.browse.upcomingMovies.map(obj => {
-         return <BrowseVideoBox selectVideo={this.props.selectVideo} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} />
+    if(this.props.videoList.upcomingMovies.length > 0) {
+      return this.props.videoList.upcomingMovies.map(obj => {
+         return <BrowseVideoBox selectVideo={this.props.selectVideo} openModal={this.props.openModal} key={obj.id} id={obj.id} posterPath={obj.poster_path} title={obj.title} vidObj={obj} />
       });
     }
   }
@@ -40,7 +45,7 @@ class Browse extends Component {
         <div className="columns is-multiline">
           {this.renderUpcomingMovies()}
         </div>
-        <VideoRoomModal modalActivated={ this.props.browse.modalActivated } closeModal={this.props.closeModal}/>
+        <VideoRoomModal modalActivated={ this.props.modal.modalActivated } closeModal={this.props.closeModal}/>
      </div>
     );
   }
@@ -48,12 +53,14 @@ class Browse extends Component {
 
 function mapStateToProps(state) {
   return {
-    browse: state.browse
+    videoList: state.videoList,
+    modal: state.modal,
+    video: state.video
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setRecentVideos, setUpcomingVideos, selectVideo, loadRecentVideos,loadUpcomingVideos, closeModal }, dispatch);
+  return bindActionCreators({ setRecentVideos, setUpcomingVideos, loadRecentVideos,loadUpcomingVideos, closeModal, openModal, selectVideo }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Browse);
